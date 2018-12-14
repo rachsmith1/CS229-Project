@@ -1,10 +1,10 @@
 import json
 import numpy as np
 from collections import OrderedDict
-from sklearn.neural_network import MLPClassifier
+from sklearn.naive_bayes import GaussianNB
 
 def main():                                              
-    print('#### Multilayer perceptron ####')
+    print('#### Gaussian Naive Bayes ####')
 
     # Open glossary                                      
     with open('../data/glossary.json', 'r') as fp:          
@@ -62,13 +62,8 @@ def main():
         inputs_train = x_train[0:dev_size*i]+x_train[dev_size*(i+1):len(x_train)]
         labels_train = y_train[0:dev_size*i]+y_train[dev_size*(i+1):len(x_train)]
         train_words = words_train[0:dev_size*i]+words_train[dev_size*(i+1):len(words_train)]
-        for a in range(len(train_words)):
-            if labels_train[a]==1:
-                for t in range(7):
-                    inputs_train.append(inputs_train[a])
-                    labels_train.append(labels_train[a])
         #Fit model
-        clf = MLPClassifier(solver='adam', alpha=1e-5, hidden_layer_sizes=(20, 20), random_state=1, verbose=False)
+        clf = GaussianNB(priors=None)
         print ('Training...')
         clf.fit(inputs_train, labels_train)
         print('Predicting...')
@@ -157,12 +152,7 @@ def main():
         
     #Final test using the entire training set
     print("Final Test")
-    for a in range(len(words_train)):
-            if y_train[a]==1:
-                for t in range(7):
-                    x_train.append(x_train[a])
-                    y_train.append(y_train[a])
-    clf = MLPClassifier(solver='adam', alpha=1e-5, hidden_layer_sizes=(20, 20), random_state=1, verbose=False)
+    clf = GaussianNB(priors=None)
     print ('Training...')
     clf.fit(x_train, y_train)
     print('Predicting...')
@@ -237,7 +227,7 @@ def main():
         output['f1'][k][1] = float('nan')
     else:
         output['f1'][k][1] = (2*precision*recall)/(precision+recall)
-    with open('../data/mlp_output.json', 'w') as file_path:
+    with open('../data/gnb_output.json', 'w') as file_path:
         json.dump(output, file_path)
 
 if __name__ == "__main__":

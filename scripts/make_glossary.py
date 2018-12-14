@@ -7,7 +7,7 @@ print('#### Making glossary... ####')
                                                                                            
 # Note that this path only makes sense if you call the script in the 'project' folder      
 # i.e. not the 'scripts' folder                                                            
-glossary_path = 'data/Glossary-v4.csv'                                                     
+glossary_path = '../data/Glossary-v4.csv'                                                     
                                                                                            
 # Open the csv glossary file and separate it by                                            
 with open(glossary_path) as f:                                                             
@@ -28,5 +28,5 @@ for word, defn in zip(glossary_words, glossary_defns):
         glossary[word] = {'word':word,'defn':defn}                                                     
                                                                                            
 # Save the glossary as a json file. Note this should be done above the 'data' folder       
-with open('data/glossary.json', 'w') as fp:                                                
+with open('../data/glossary.json', 'w') as fp:                                                
         json.dump(glossary, fp)                                                            

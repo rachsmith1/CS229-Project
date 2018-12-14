@@ -14,7 +14,7 @@ lemma = nltk.wordnet.WordNetLemmatizer()
 # ##################################################################
 
 # Path to top 5000 words
-top5000_path = 'data/top5000.csv'
+top5000_path = '../data/top5000.csv'
 
 # Split csv file
 with open(top5000_path) as f:
@@ -32,7 +32,7 @@ for entry in top5000_split:
 # ##################################################################
 
 # Path to file with textbook headers
-headers_path = 'data/textbook-headers.txt'
+headers_path = '../data/textbook-headers.txt'
 
 # Open the file with textbook headers and read them into an array
 headers_open = open(headers_path, 'r')
@@ -83,7 +83,7 @@ for k in chapters.keys():
 # ##################################################################
 
 # Path to file with textbook sentences
-sentences_path = 'data/textbook-sentences.txt'
+sentences_path = '../data/textbook-sentences.txt'
 
 # Open the file with textbook sentences and read them into an array
 sentences_open = open(sentences_path, 'r')
@@ -193,7 +193,7 @@ for string in dataset.keys():
     dataset[string]['TF'] = dataset[string]['TF'] / chapters[dataset[string]['in_chapters'][0]]['chapter_terms']
 
 # Save the newly made dataset
-with open('data/dataset.json', 'w') as fp:
+with open('../data/dataset.json', 'w') as fp:
     json.dump(dataset, fp)
 
 #for k in chapters.keys():

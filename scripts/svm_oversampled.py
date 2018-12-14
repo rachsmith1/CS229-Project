@@ -1,10 +1,10 @@
 import json
 import numpy as np
 from collections import OrderedDict
-from sklearn.neural_network import MLPClassifier
+from sklearn.svm import SVC
 
 def main():                                              
-    print('#### Multilayer perceptron ####')
+    print('#### Support Vector Machine ####')
 
     # Open glossary                                      
     with open('../data/glossary.json', 'r') as fp:          
@@ -68,7 +68,7 @@ def main():
                     inputs_train.append(inputs_train[a])
                     labels_train.append(labels_train[a])
         #Fit model
-        clf = MLPClassifier(solver='adam', alpha=1e-5, hidden_layer_sizes=(20, 20), random_state=1, verbose=False)
+        clf = SVC(kernel='rbf')
         print ('Training...')
         clf.fit(inputs_train, labels_train)
         print('Predicting...')
@@ -87,7 +87,7 @@ def main():
             if prediction[0]==0 and label!=1:
                 tn += 1
             output['words'][words_dev[j]][i][2] = int(prediction[0])
-        print("It's time to check the "+str(len(fp_list))+" false positives! "
+        print("It's time to check the false positives! "
           "Type 'y' if the word should be in the glossary, 'p' to go back one word, "
           "or press any key otherwise.")
         change_counter = 0
@@ -162,7 +162,7 @@ def main():
                 for t in range(7):
                     x_train.append(x_train[a])
                     y_train.append(y_train[a])
-    clf = MLPClassifier(solver='adam', alpha=1e-5, hidden_layer_sizes=(20, 20), random_state=1, verbose=False)
+    clf = SVC(kernel='rbf')
     print ('Training...')
     clf.fit(x_train, y_train)
     print('Predicting...')
@@ -181,7 +181,7 @@ def main():
         if prediction[0]==0 and label!=1:
             tn += 1
         output['words'][words_test[j]][k][2] = int(prediction[0])
-    print("It's time to check the "+str(len(fp_list))+" false positives! "
+    print("It's time to check the false positives! "
           "Type 'y' if the word should be in the glossary, 'p' to go back one word, "
           "or press any key otherwise.")
     change_counter = 0
@@ -237,7 +237,7 @@ def main():
         output['f1'][k][1] = float('nan')
     else:
         output['f1'][k][1] = (2*precision*recall)/(precision+recall)
-    with open('../data/mlp_output.json', 'w') as file_path:
+    with open('../data/svm_output.json', 'w') as file_path:
         json.dump(output, file_path)
 
 if __name__ == "__main__":
